@@ -37,3 +37,93 @@ tags:
 // 3
 // 5
 ```
+
+## demo2
+```
+function Publish() {     // 主题对象
+    this.subscribers = [];
+}
+
+// 定义订阅的函数
+Publish.prototype = {
+    theme: 'default',       // 默认主题
+    sub: function(subPerson) {  // 订阅的函数
+        let btn = true
+        this.subscribers.forEach(item => {      // 不可重复订阅
+            if(subPerson.name === item.name) {
+                return btn = false
+            }
+        })
+        if(btn) {
+            this.subscribers.push(subPerson)
+        }
+    },
+    deliver: function() {   // 分发消息函数
+        if(this.subscribers.length > 0) {
+            this.subscribers.forEach(item => {  // 触发所有订阅者的更新
+                item.update(this.theme)
+            });
+        }else {
+            console.log(this.theme + 'is no subscribers');
+        }
+    }
+}
+
+function Sub(name) {        // 订阅者名字
+    this.name = name;
+}
+
+Sub.prototype = {
+    subFn: function(pub) {         // 订阅者订阅方法
+        if(pub && pub.sub && typeof pub.sub === 'function') {
+            pub.sub(this);
+        }
+    },
+    update: function(theme) {   // 订阅者更新方法
+        console.log(this.name + '收到了'　+ theme);
+    }
+}
+
+
+// 创建了三个主题
+let publish1 = new Publish()
+publish1.theme = '美剧'
+
+let publish2 = new Publish()
+publish2.theme = '日剧'
+
+let publish3 = new Publish()
+publish3.theme = '韩剧'
+
+// 创建8个订阅者
+let sub1 = new Sub('Joan')
+let sub2 = new Sub('Joan1')
+let sub3 = new Sub('Joan2')
+let sub4 = new Sub('Joan3')
+let sub5 = new Sub('Joan4')
+let sub6 = new Sub('Joan5')
+let sub7 = new Sub('Joan6')
+let sub8 = new Sub('Joan7')
+
+sub1.subFn(publish1);
+sub1.subFn(publish2);
+sub2.subFn(publish2);
+sub3.subFn(publish2);
+
+publish1.deliver();
+publish2.deliver();
+publish3.deliver();
+
+```
+
+> 运行结果 
+> 
+> Joan收到了美剧
+> 
+> Joan收到了日剧
+> 
+> Joan1收到了日剧
+> 
+> Joan2收到了日剧
+> 
+> 韩剧is no subscribers
