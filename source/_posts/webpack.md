@@ -20,3 +20,70 @@ Project-WebCube/tree/master/packages/webcube > package.json 中yarn安装的webp
 
 需要替换成 mini-css-extract-plugin插件使用
 [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin)
+
+
+## extract-text-webpack-plugin && mini-css-extract-plugin 区别
+
+### extract-text-webpack-plugin
+> Extract text from a bundle, or bundles, into a separate file.
+
+#### extract-text-webpack-plugin 抽取到同一个文件夹下，名称不变
+```js
+    var ExtractTextPlugin = require("extract-text-webpack-plugin");
+    module.exports = {
+    entry: {
+        "script": "./src/entry.js",
+        "bundle": "./src/entry2.js",
+    },
+    ...
+    module: {
+        loaders: [
+        { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") }
+        ]
+    },
+    plugins: [
+        new ExtractTextPlugin("[name].css")
+    ]
+    }
+```
+
+但是这样配置的话所有分离的文件也会压缩到一个文件上
+```js
+    plugins: [
+    new ExtractTextPlugin("[name].css", {allChunks: true})
+    ]
+```
+
+* mini-css-extract-plugin不能压缩到同一个文件夹,只能压缩到同一个文件中或者是压缩到js文件中，如此一来,优点是减少了请求,缺点也很明显,如果文件很大,打包过后js文件将会很大.
+* extract-text-webpack-plugin 可以实现多个文件抽离到同一个文件夹下,但是目前不支持webpack 4.X.X,官方推荐使用mini-css-extract-plugin
+
+
+### mini-css-extract-plugin
+
+mini-css-extract-plugin 配置 抽离到同一个文件夹可以如下：
+
+```js
+    module.exports = {
+        module: {
+        rules: [
+            {
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader',
+                ]
+            }
+        ]
+        },
+        plugins: [
+        new MiniCssExtractPlugin({
+          // Options similar to the same options in webpackOptions.output
+          // both options are optional
+          filename: devMode ? '[name].css' : '[name].[hash].css',
+          chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+        })
+        ]
+    }
+```
