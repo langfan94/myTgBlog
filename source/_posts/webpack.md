@@ -56,6 +56,7 @@ Project-WebCube/tree/master/packages/webcube > package.json 中yarn安装的webp
 
 * mini-css-extract-plugin不能压缩到同一个文件夹,只能压缩到同一个文件中或者是压缩到js文件中，如此一来,优点是减少了请求,缺点也很明显,如果文件很大,打包过后js文件将会很大.
 * extract-text-webpack-plugin 可以实现多个文件抽离到同一个文件夹下,但是目前不支持webpack 4.X.X,官方推荐使用mini-css-extract-plugin
+* mini-css-extract-plugin如下配置打包，会把import './css/index.css' 文件打包压缩到/dist文件夹下的一个js文件中，然后通过script中的src源引入.
 
 
 ### mini-css-extract-plugin
@@ -87,3 +88,4 @@ mini-css-extract-plugin 配置 抽离到同一个文件夹可以如下：
         ]
     }
 ```
+
