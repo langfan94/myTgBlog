@@ -78,7 +78,7 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: rsync
+- type: rsync
   host: myblog.xfweb.xyz
   user: root
   root: /var/www/myblog
@@ -86,3 +86,6 @@ deploy:
   delete: true
   verbose: true
   ignore_errors: false
+ 
+- type: git
+  repo: git@github.com:langfan94/langfan94.github.io.git
