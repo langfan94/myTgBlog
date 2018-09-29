@@ -78,14 +78,14 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-- type: rsync
-  host: myblog.xfweb.xyz
-  user: root
-  root: /var/www/myblog
-  port: 22
-  delete: true
-  verbose: true
-  ignore_errors: false
+# - type: rsync
+#   host: myblog.xfweb.xyz
+#   user: root
+#   root: /var/www/myblog
+#   port: 22
+#   delete: true
+#   verbose: true
+#   ignore_errors: false
  
 - type: git
   repo: git@github.com:langfan94/langfan94.github.io.git
