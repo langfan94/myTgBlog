@@ -37,6 +37,6 @@ jobs:
       uses: maxheld83/ghpages@v0.2.1
       env: 
         BUILD_DIR: "public/"
-        GH_PAT: ea49ad4f229521a14ade88c9b94d0020360ba9d1
+        GH_PAT: ${{ secrets.GH_PAT }}
       
     
