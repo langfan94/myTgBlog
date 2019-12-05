@@ -14,3 +14,9 @@ browser visit localhost:4000
 ```
 $ hexo generator
 ```
+# gh-pages
+
+github page
+
+# master 
+use Hexo generator github page 
