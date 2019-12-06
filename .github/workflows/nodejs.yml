@@ -33,6 +33,7 @@ jobs:
         npm install
         npm install -g hexo-cli
         hexo generate
+        cp ./CNAME ./public/CNAME
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v2
       env: 
